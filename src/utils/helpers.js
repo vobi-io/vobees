@@ -1,10 +1,10 @@
-const fs = require('fs')
-const path = require('path')
+import fs from "fs";
+import path from "path";
 
 var mkdir = function(dir) {
 	// making directory without exception if exists
 	try {
-		fs.mkdirSync(dir, 0755);
+		fs.mkdirSync(dir, 0o755);
 	} catch(e) {
 		if(e.code != "EEXIST") {
 			throw e;
@@ -57,7 +57,9 @@ var copy = function(src, dest) {
 	oldFile.pipe(newFile);
 };
 
-module.exports.mkdir = mkdir
-module.exports.rmdir = rmdir
-module.exports.copyDir = copyDir
-module.exports.copy = copy
+export {
+	mkdir,
+	rmdir,
+	copyDir,
+	copy
+}

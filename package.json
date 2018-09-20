@@ -2,26 +2,44 @@
   "name": "vobi-cli",
   "version": "1.0.0",
   "description": "Vobi command line tool",
-  "main": "cli.js",
+  "main": "./build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run lint && babel --presets=es2015 ./src -d ./build --presets=es2015 --copy-files --ignore ./src/templates/modules ",
+    "lint": "eslint ./src",
+    "lint-fix": "eslint ./src --fix",
+    "test": "nyc mocha --require babel-core/register",
+    "lcov": "http-server ./coverage/lcov-report/",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "vobi-cli"
   ],
   "author": "vobi.io",
   "license": "ISC",
+  "bin": {
+    "vobi-cli": "./build/index.js"
+  },
   "dependencies": {
     "colors": "^1.3.2",
     "commander": "^2.18.0",
     "inquirer": "^6.2.0",
     "replace": "^1.0.0"
   },
-  "bin": {
-    "vobi-cli": "./src/index.js"
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1"
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1"
+  },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ]
   }
 }

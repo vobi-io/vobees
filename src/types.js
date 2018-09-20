@@ -1,3 +1,3 @@
-module.exports = {
-  modules: ['User', 'Device']
-}
+export default {
+  modules: ['User', 'Device'],
+};

@@ -4,14 +4,14 @@
  * Module dependencies.
  */
 
-var program = require('commander');
-var colors = require('colors');
-const { prompt } = require('inquirer');
 
-const GenerateModule = require('./generate');
-const CreateModule = require('./create');
+import program from 'commander';
+import colors from 'colors';
+import { prompt } from 'inquirer';
+import Types from './types';
+import GenerateModule from './generate';
+import CreateModule from './create';
 
-const Types = require('./types');
 
 program
   .version('0.0.1')
@@ -24,15 +24,15 @@ program
   .description('Generate New Module')
   .action(() => {
     prompt([{
-      type : 'input',
-      name : 'moduleName',
-      message : 'Enter Module Name:'
+      type: 'input',
+      name: 'moduleName',
+      message: 'Enter Module Name:',
     }])
-      .then(answers => {
-        if(!answers.moduleName) {
+      .then((answers) => {
+        if (!answers.moduleName) {
           return console.log(colors.red('You must enter module name'));
         }
-        return new GenerateModule(answers.moduleName)
+        return new GenerateModule(answers.moduleName);
       });
   });
 
@@ -42,16 +42,16 @@ program
   .description('Create Module')
   .action(() => {
     prompt([{
-      type : 'list',
-      name : 'moduleName',
-      message : 'Choose Module:',
-      choices: Types.modules
+      type: 'list',
+      name: 'moduleName',
+      message: 'Choose Module:',
+      choices: Types.modules,
     }])
-      .then(answers => {
-        if(!answers.moduleName) {
+      .then((answers) => {
+        if (!answers.moduleName) {
           return console.log(colors.red('You must choose module'));
         }
-        return new CreateModule(answers.moduleName)
+        return new CreateModule(answers.moduleName);
       });
   });
 
