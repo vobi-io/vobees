@@ -1,0 +1,12 @@
+const [UModule]Controller = require('../security/securityController')
+const [UModule]Controller = require('./[LModule]Controller')
+
+module.exports = {
+  '/api/v1/[LModule]': {
+    '/': {
+      get: [
+        [UModule]Controller.list.bind([UModule]Controller)
+      ]
+    }
+  }
+}

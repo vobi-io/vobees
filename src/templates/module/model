@@ -1,0 +1,27 @@
+module.exports = function (mongoose) {
+  var Schema = mongoose.Schema
+
+  var [LModule]Schema = new Schema({
+    
+    owner: { type: Schema.Types.ObjectId, ref: 'User' },
+    createdTime: { type: Date, default: Date.now },
+    modifiedTime: { type: Date },
+    version: { type: Number }, // version is increasing by update date
+  })
+
+  [LModule]Schema.pre('save', function (next) {
+    this.version = +new Date()
+    this.modifiedTime = Date.now()
+    next()
+  })
+
+  [LModule]Schema.methods.toJSON = function () {
+    var obj = this.toObject()
+    // remove props that should not be exposed
+    delete obj.__v
+
+    return obj
+  }
+
+  return mongoose.model('[UModuleL', [LModule]Schema)
+}
