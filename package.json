@@ -9,7 +9,8 @@
     "lint-fix": "eslint ./src --fix",
     "test": "nyc mocha --require babel-core/register",
     "lcov": "http-server ./coverage/lcov-report/",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "prepare": "npm run build"
   },
   "keywords": [
     "vobi-cli"
