@@ -1,6 +1,6 @@
 {
   "name": "vobi-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Vobi command line tool",
   "main": "./build/index.js",
   "scripts": {
@@ -17,6 +17,10 @@
   ],
   "author": "vobi.io",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vobi-io/vobi-cli"
+  },
   "bin": {
     "vobi-cli": "./build/index.js"
   },
