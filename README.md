@@ -12,7 +12,7 @@ npm install --save-dev vobi-cli
 Run command from project`s root folder
 
 ```
-vobi-cli [command]
+vobi-cli [method]
 ```
 
 ### Methods
