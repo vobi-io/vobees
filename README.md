@@ -1,6 +1,12 @@
 # Vobi Cli
 Command line tool for Vobi Backend
 
+### Install
+Install vobi-cli
+```
+npm install --save-dev vobi-cli
+```
+
 ### Methods
 
 | name | Options | description |
