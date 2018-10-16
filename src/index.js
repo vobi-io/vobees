@@ -11,6 +11,7 @@ import { prompt } from 'inquirer';
 import Types from './types';
 import GenerateModule from './generate';
 import CreateModule from './create';
+import Seeder from './seeder';
 
 
 program
@@ -53,6 +54,19 @@ program
         }
         return new CreateModule(answers.moduleName);
       });
+  });
+
+program
+  .command('seed')
+  .alias('s')
+  .description('Seed')
+  .option('-o, --only [value]', 'Whitelist for seeders')
+  .option('-e, --except [value]', 'Blacklist for seeders')
+  .option('-r, --reset [value]', 'Clear Database Before')
+  .action((params) => {
+    console.log(params);
+    // console.log(params.only, params.except, params.reset);
+    return new Seeder(params.only, params.except, params.reset);
   });
 
 
