@@ -7,6 +7,7 @@
 
 import program from 'commander';
 import colors from 'colors';
+import fs from 'fs';
 import { prompt } from 'inquirer';
 import Types from './types';
 import GenerateModule from './generate';
@@ -71,7 +72,18 @@ program
   .option('-o, --only [value]', 'Whitelist for seeders')
   .option('-e, --except [value]', 'Blacklist for seeders')
   .option('-r, --reset [value]', 'Clear Database Before')
-  .action(params => new Seeder(params.only, params.except, params.reset));
+  .action((params) => {
+    const configPath = `${process.cwd()}/src/config`;
+    const configs = fs.readdirSync(configPath);
+    const choices = configs.map(item => item.split('.js')[0]).filter(item => item !== 'index' && item !== 'default');
+    prompt([{
+      type: 'list',
+      name: 'configName',
+      message: 'Choose Config for Database Seeding:',
+      choices,
+    }])
+      .then(answers => new Seeder(params.only, params.except, params.reset, answers.configName));
+  });
 
 program
   .command('generate:seed')

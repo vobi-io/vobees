@@ -4,13 +4,23 @@ import colors from 'colors';
 const { forEach } = require('p-iteration');
 
 class Seeder {
-  constructor(only = '', except = '', reset = false) {
+  constructor(only = '', except = '', reset = false, configName) {
     this.only = only.toLocaleLowerCase().trim();
     this.except = except.toLocaleLowerCase().trim();
     this.reset = reset;
     this.modules = [];
 
     this.workingDirectory = process.cwd();
+
+    const configPath = `${process.cwd()}/src/config/${configName}`;
+    const defaultConfigPath = `${process.cwd()}/src/config/default`;
+
+    const defaultConfig = require(defaultConfigPath);
+    const selectedConfig = require(configPath);
+
+    const config = Object.assign({}, defaultConfig, selectedConfig);
+
+    this.connection = config.database.connection;
 
     const RootSeeder = require(`${this.workingDirectory}/seed`);
     this.rootSeeder = RootSeeder;
@@ -114,9 +124,8 @@ class Seeder {
   }
 
   async connectDB() {
-    const connection = 'mongodb://localhost:27017/myapp';
     const db = `${this.workingDirectory}/src/db`;
-    const mongoose = require(db)(connection, ' Seed');
+    const mongoose = require(db)(this.connection, ' Seed');
     this.mongoose = mongoose;
   }
 
