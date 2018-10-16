@@ -12,6 +12,8 @@ import Types from './types';
 import GenerateModule from './generate';
 import CreateModule from './create';
 import Seeder from './seeder';
+import MakeSeeder from './seeder/MakeSeeder';
+import GenerateSeeder from './seeder/generate';
 
 
 program
@@ -57,17 +59,36 @@ program
   });
 
 program
+  .command('make:seeder')
+  .alias('a')
+  .description('Create Module')
+  .action(() => new MakeSeeder());
+
+program
   .command('seed')
   .alias('s')
   .description('Seed')
   .option('-o, --only [value]', 'Whitelist for seeders')
   .option('-e, --except [value]', 'Blacklist for seeders')
   .option('-r, --reset [value]', 'Clear Database Before')
-  .action((params) => {
-    console.log(params);
-    // console.log(params.only, params.except, params.reset);
-    return new Seeder(params.only, params.except, params.reset);
-  });
+  .action(params => new Seeder(params.only, params.except, params.reset));
 
+program
+  .command('generate:seed')
+  .alias('a')
+  .description('Generate New Module')
+  .action(() => {
+    prompt([{
+      type: 'input',
+      name: 'seederName',
+      message: 'Enter Seeder Name:',
+    }])
+      .then((answers) => {
+        if (!answers.seederName) {
+          return console.log(colors.red('You must enter seed name'));
+        }
+        return new GenerateSeeder(answers.seederName);
+      });
+  });
 
 program.parse(process.argv);

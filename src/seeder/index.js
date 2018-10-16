@@ -1,6 +1,7 @@
 import fs from 'fs';
-import path from 'path';
 import colors from 'colors';
+
+const { forEach } = require('p-iteration');
 
 class Seeder {
   constructor(only = '', except = '', reset = false) {
@@ -9,62 +10,131 @@ class Seeder {
     this.reset = reset;
     this.modules = [];
 
-    const RootSeeder = path.join(__dirname, '/seed/index');
+    this.workingDirectory = process.cwd();
 
-    this.RootSeeder = RootSeeder;
+    const RootSeeder = require(`${this.workingDirectory}/seed`);
+    this.rootSeeder = RootSeeder;
+
+    this.mongoose = null;
+    this.modules = [];
+
+    this.models = {};
 
     this.init();
   }
 
   async setSeedModules() {
-    let modules;
+    let modules = [];
     if (this.only) {
-      modules = this.only;
+      modules = [this.only];
     } else if (this.except) {
-      modules = this.except;
+      modules = [this.except];
     } else {
-      modules = this.RootSeeder.seeders;
+      modules = this.rootSeeder.seeders;
     }
 
     this.modules = modules;
   }
 
-  async clearDatabase() {
-    if (this.reset) {
-      console.log('test');
-    }
+  async fillReferencedFields(item) {
+    const data = {};
+
+    await forEach(item.__refs, async (refItem) => {
+      const {
+        field, select, model, query,
+      } = refItem;
+
+      const refModel = this.models[model];
+      if (refModel) {
+        const result = await refModel.findOne(query);
+
+        if (result) {
+          if (Array.isArray(select)) {
+            // const fields
+            data[field] = [result];
+          } else {
+            const value = select;
+            data[field] = result[value];
+          }
+        }
+      }
+    });
+
+    return data;
   }
 
-  async seedModule(seederPath) {
-    const seeder = require(seederPath);
+  seedModule(seederPath, module) {
+    return new Promise(async (resolve, rejects) => {
+      const seeder = require(seederPath);
+      const SeederClass = new seeder();
 
-    console.log(seeder.seed);
+      const seeds = [];
 
-    if (this.modules) {
-      return seeder.seed;
-    }
+      await forEach(SeederClass.seed(), async (item) => {
+        let newItem = item;
 
-    return false;
+        if (newItem.__refs) {
+          const relationships = await this.fillReferencedFields(newItem);
+
+          newItem = Object.assign({}, newItem, relationships);
+        }
+
+        seeds.push(newItem);
+      });
+
+      const Model = require(`${this.workingDirectory}/src/modules/${module}/${seeder.model}`)(this.mongoose);
+
+      this.models[seeder.model] = Model;
+
+      if (this.reset) {
+        await Model.remove({}).exec();
+      }
+
+      await Model.insertMany(seeds);
+
+      setTimeout(() => {
+        resolve();
+      }, 100);
+    });
   }
 
   async seedModules() {
-    this.modules.forEach(async (item) => {
+    for (let index = 0; index < this.modules.length; index++) {
+      const item = this.modules[index];
+
       const module = item.toLowerCase();
-      const seeder = path.join(__dirname, `/seed/${module}.js`);
+      // const seeder = path.join(__dirname, `/seed/${module}.js`);
+      const seeder = `${this.workingDirectory}/seed/${module}.js`;
       if (!fs.existsSync(seeder)) {
         console.log(colors.red(`Seeder for module: ${module} does not exists, skipping...`));
       } else {
-        await this.seedModule(seeder);
+        await this.seedModule(seeder, module);
       }
-    });
+    }
+  }
+
+  async connectDB() {
+    const connection = 'mongodb://localhost:27017/myapp';
+    const db = `${this.workingDirectory}/src/db`;
+    const mongoose = require(db)(connection, ' Seed');
+    this.mongoose = mongoose;
+  }
+
+  async disconnectDb() {
+    await this.mongoose.disconnect();
   }
 
   async init() {
     await this.setSeedModules();
-    await this.clearDatabase();
+    await this.connectDB();
+
     await this.seedModules();
 
-    return console.log(colors.green('Database successfully seeded!'));
+    setTimeout(async () => {
+      // await this.disconnectDb();
+      console.log(colors.green('Database successfully seeded!'));
+      process.exit();
+    }, 500);
   }
 }
 
