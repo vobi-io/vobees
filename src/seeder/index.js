@@ -79,18 +79,40 @@ class Seeder {
       const SeederClass = new seeder();
 
       const seeds = [];
+      let dummyData = {
+        quantity: 0,
+      };
 
-      await forEach(SeederClass.seed(), async (item) => {
-        let newItem = item;
+      // Generate Static Seed Data
+      if (SeederClass.seed) {
+        await forEach(SeederClass.seed(), async (item) => {
+          let newItem = item;
 
-        if (newItem.__refs) {
-          const relationships = await this.fillReferencedFields(newItem);
+          if (newItem.__refs) {
+            const relationships = await this.fillReferencedFields(newItem);
 
-          newItem = Object.assign({}, newItem, relationships);
+            newItem = Object.assign({}, newItem, relationships);
+          }
+
+          seeds.push(newItem);
+        });
+      }
+
+      // Generate Dummy Data
+      if (SeederClass.dummy) {
+        dummyData = SeederClass.dummy();
+        dummyData.data = [];
+
+        for (let i = 0; i < dummyData.quantity; i++) {
+          let newDummyItem = dummyData.item({ index: i });
+          if (newDummyItem.__refs) {
+            const relationships = await this.fillReferencedFields(newDummyItem);
+            newDummyItem = Object.assign({}, newDummyItem, relationships);
+          }
+
+          dummyData.data.push(newDummyItem);
         }
-
-        seeds.push(newItem);
-      });
+      }
 
       const Model = require(`${this.workingDirectory}/src/modules/${module}/${seeder.model}`)(this.mongoose);
 
@@ -101,6 +123,10 @@ class Seeder {
       }
 
       await Model.insertMany(seeds);
+
+      if (dummyData.data && dummyData.data.length) {
+        await Model.insertMany(dummyData.data);
+      }
 
       setTimeout(() => {
         resolve();

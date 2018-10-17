@@ -94,12 +94,16 @@ program
       type: 'input',
       name: 'seederName',
       message: 'Enter Seeder Name:',
+    }, {
+      type: 'input',
+      name: 'modelName',
+      message: 'Enter Model Name To Generate boilerplate (optional):',
     }])
       .then((answers) => {
         if (!answers.seederName) {
           return console.log(colors.red('You must enter seed name'));
         }
-        return new GenerateSeeder(answers.seederName);
+        return new GenerateSeeder(answers.seederName, answers.modelName);
       });
   });
 

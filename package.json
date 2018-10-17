@@ -46,7 +46,9 @@
     "eslint": "^5.6.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "lodash": "^4.17.11",
     "mocha": "^5.2.0",
+    "mongoose-schema-jsonschema": "^1.1.15",
     "nyc": "^13.0.1",
     "transform-runtime": "0.0.0"
   },
