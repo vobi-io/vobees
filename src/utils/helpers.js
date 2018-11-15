@@ -13,7 +13,7 @@ var mkdir = function(dir) {
 };
 
 var rmdir = function(dir) {
-	if (path.existsSync(dir)) {
+	if (fs.existsSync(dir)) {
 		var list = fs.readdirSync(dir);
 		for(var i = 0; i < list.length; i++) {
 			var filename = path.join(dir, list[i]);

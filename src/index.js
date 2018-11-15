@@ -15,6 +15,7 @@ import CreateModule from './create';
 import Seeder from './seeder';
 import MakeSeeder from './seeder/MakeSeeder';
 import GenerateSeeder from './seeder/generate';
+import GenerateProject from './generator';
 
 
 program
@@ -106,5 +107,10 @@ program
         return new GenerateSeeder(answers.seederName, answers.modelName);
       });
   });
+
+program
+  .command('new <projectName>')
+  .option('-n, --new', 'New project')
+  .action((projectName, cmd) => new GenerateProject(projectName));
 
 program.parse(process.argv);
