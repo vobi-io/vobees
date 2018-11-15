@@ -13,7 +13,6 @@ var projectConfig = function() {
 
 	if(fs.existsSync(configFile)) {
 		const projectConfigData = JSON.parse(fs.readFileSync(configFile, 'utf8'));
-		console.log(projectConfigData)
 		config = Object.assign({}, config, projectConfigData)
 	}
 	
@@ -50,7 +49,7 @@ var rmdir = function(dir) {
 		}
 		fs.rmdirSync(dir);
 	} else {
-		console.warn("warn: " + dir + " not exists");
+		// console.warn("warn: " + dir + " not exists");
 	}
 };
 

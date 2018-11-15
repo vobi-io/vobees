@@ -1,4 +1,4 @@
-const [UModule]Controller = require('../security/securityController')
+const SecurityController = require('../security/securityController')
 const [UModule]Controller = require('./[LModule]Controller')
 
 module.exports = {

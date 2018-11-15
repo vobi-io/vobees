@@ -52,6 +52,8 @@ class GenerateProject {
   async clear() {
     const src = `${this.appDirectory}/${this.repositoryName}-${this.releaseName}`;
     rmdir(src);
+    const screenshots = `${this.appDirectory}/screenshots`;
+    rmdir(screenshots);
   }
 
   async getLatestVersion() {
@@ -70,6 +72,7 @@ class GenerateProject {
     await this.downloadBoilerplate();
     this.log('Extracting Project files...');
     await this.unzipFile();
+    this.log('Finishing...');
     await this.clear();
   }
 

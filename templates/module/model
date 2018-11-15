@@ -23,5 +23,5 @@ module.exports = function (mongoose) {
     return obj
   }
 
-  return mongoose.model('[UModuleL', [LModule]Schema)
+  return mongoose.model('[UModule]', [LModule]Schema)
 }

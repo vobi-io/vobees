@@ -12,7 +12,7 @@ class CreateModule {
     this.LModule = LModule;
 
     this.workingDirectory = process.cwd();
-    this.appDirectory = `${this.workingDirectory}/${projectConfig().appPath}}`;
+    this.appDirectory = `${this.workingDirectory}/${projectConfig().appPath}`;
     this.modulesDirectory = `${this.appDirectory}/modules`;
     this.newModuleDirectory = `${this.modulesDirectory}/${LModule}`;
 
