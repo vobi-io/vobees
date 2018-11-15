@@ -111,6 +111,6 @@ program
 program
   .command('new <projectName>')
   .option('-n, --new', 'New project')
-  .action((projectName, cmd) => new GenerateProject(projectName));
+  .action(projectName => new GenerateProject(projectName));
 
 program.parse(process.argv);

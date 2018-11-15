@@ -23,6 +23,7 @@ class CreateModule {
   }
 
   getValue(key) {
+    this.funcName = 'getValue';
     let result = null;
     const fieldName = key.toLowerCase();
     switch (fieldName) {
@@ -74,8 +75,6 @@ class CreateModule {
         break;
     }
 
-    const data = this.connection;
-
     return result;
   }
 
@@ -100,7 +99,6 @@ class CreateModule {
         let json = {};
         flatFieldNames.map((fieldName) => {
           const key = fieldName;
-          const value = null;
 
           const nestedKeys = fieldName.split('.');
 
@@ -110,6 +108,8 @@ class CreateModule {
           } else {
             json[key] = this.getValue(key);
           }
+
+          return json;
         });
         const schema = JSON.stringify(json, undefined, 2);
 
@@ -147,7 +147,7 @@ class CreateModule {
     await this.copySeedFile();
 
 
-    setTimeout(async () => {
+    return setTimeout(async () => {
       // await this.disconnectDb();
       console.log(colors.green(`Seeder ${this.seederName} successfully created!`));
       process.exit();

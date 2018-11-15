@@ -97,7 +97,7 @@ class GenerateProject {
     await this.createProjectFiles();
 
 
-    setTimeout(async () => {
+    return setTimeout(async () => {
       // await this.disconnectDb();
       this.done();
       process.exit();

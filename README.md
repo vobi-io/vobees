@@ -29,7 +29,7 @@ vobi-cli [method]
 To create config for per project, create `.vobirc` file in projects root directory
 
 `.vobirc` file should contain
-```
+```json
 {
   "appPath": "src",
   "seedPath": "seed"

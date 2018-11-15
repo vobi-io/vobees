@@ -1,3 +1,6 @@
+/* eslint-disable no-plusplus */
+/* eslint-disable no-await-in-loop */
+
 import fs from 'fs';
 import colors from 'colors';
 import { projectConfig } from '../utils/helpers';
@@ -75,9 +78,9 @@ class Seeder {
   }
 
   seedModule(seederPath, module) {
-    return new Promise(async (resolve, rejects) => {
-      const seeder = require(seederPath);
-      const SeederClass = new seeder();
+    return new Promise(async (resolve) => {
+      const SeederFile = require(seederPath);
+      const SeederClass = new SeederFile();
 
       const seeds = [];
       let dummyData = {
@@ -115,9 +118,9 @@ class Seeder {
         }
       }
 
-      const Model = require(`${this.workingDirectory}/src/modules/${module}/${seeder.model}`)(this.mongoose);
+      const Model = require(`${this.workingDirectory}/src/modules/${module}/${SeederFile.model}`)(this.mongoose);
 
-      this.models[seeder.model] = Model;
+      this.models[SeederFile.model] = Model;
 
       if (this.reset) {
         await Model.remove({}).exec();
