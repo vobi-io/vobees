@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import colors from 'colors';
 import _ from 'lodash';
+import { projectConfig } from '../utils/helpers';
 
 class CreateModule {
   constructor(seederName, modelName) {
@@ -11,7 +12,7 @@ class CreateModule {
     this.modelName = (modelName || '').trim();
 
     this.workingDirectory = process.cwd();
-    this.seedDirectory = `${this.workingDirectory}/seed`;
+    this.seedDirectory = `${this.workingDirectory}/${projectConfig().seedPath}`;
 
     this.create();
   }

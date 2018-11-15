@@ -1,5 +1,6 @@
 import fs from 'fs';
 import colors from 'colors';
+import { projectConfig } from '../utils/helpers';
 
 const { forEach } = require('p-iteration');
 
@@ -12,8 +13,8 @@ class Seeder {
 
     this.workingDirectory = process.cwd();
 
-    const configPath = `${process.cwd()}/src/config/${configName}`;
-    const defaultConfigPath = `${process.cwd()}/src/config/default`;
+    const configPath = `${process.cwd()}/${projectConfig().appPath}/config/${configName}`;
+    const defaultConfigPath = `${process.cwd()}/${projectConfig().appPath}/config/default`;
 
     const defaultConfig = require(defaultConfigPath);
     const selectedConfig = require(configPath);
@@ -22,7 +23,7 @@ class Seeder {
 
     this.connection = config.database.connection;
 
-    const RootSeeder = require(`${this.workingDirectory}/seed`);
+    const RootSeeder = require(`${this.workingDirectory}/${projectConfig().seedPath}`);
     this.rootSeeder = RootSeeder;
 
     this.mongoose = null;

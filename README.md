@@ -24,6 +24,21 @@ Run command from project`s root folder
 vobi-cli [method]
 ```
 
+### Config
+
+To create config for per project, create `.vobirc` file in projects root directory
+
+`.vobirc` file should contain
+```
+{
+  "appPath": "src",
+  "seedPath": "seed"
+}
+```
+`appPath` - directory for main root folder, default is `src`,
+`seedPath` - directory for seed files container, default is `seed`,
+
+
 ### Methods
 
 | name | Options | description |

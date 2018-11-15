@@ -1,6 +1,25 @@
 import fs from "fs";
 import path from "path";
 
+var projectConfig = function() {
+	const workingDirectory = process.cwd();
+
+	const configFile = `${workingDirectory}/.vobirc`
+
+	let config = {
+		appPath: "src",
+		seedPath: "src"
+	}
+
+	if(fs.existsSync(configFile)) {
+		const projectConfigData = JSON.parse(fs.readFileSync(configFile, 'utf8'));
+		console.log(projectConfigData)
+		config = Object.assign({}, config, projectConfigData)
+	}
+	
+	return config
+};
+
 var mkdir = function(dir) {
 	// making directory without exception if exists
 	try {
@@ -61,5 +80,6 @@ export {
 	mkdir,
 	rmdir,
 	copyDir,
-	copy
+	copy,
+	projectConfig
 }

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import colors from 'colors';
+import { projectConfig } from '../utils/helpers';
 
 class GenerateModule {
   constructor(moduleName) {
@@ -9,7 +10,7 @@ class GenerateModule {
     const LModule = this.moduleName.charAt(0).toLowerCase() + this.moduleName.slice(1);
 
     this.workingDirectory = process.cwd();
-    this.appDirectory = `${this.workingDirectory}/app`;
+    this.appDirectory = `${this.workingDirectory}/${projectConfig().appPath}`;
     this.modulesDirectory = `${this.appDirectory}/modules`;
     this.newModuleDirectory = `${this.modulesDirectory}/${LModule}`;
 
