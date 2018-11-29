@@ -5,7 +5,7 @@ import download from 'download';
 import axios from 'axios';
 import { copyDir, rmdir } from '../utils/helpers';
 
-const latestReleaseUrl = 'https://api.github.com/repos/shakogegia/recompose-utils/releases/latest';
+const latestReleaseUrl = 'https://api.github.com/repos/vobi-io/boilerplate/releases/latest';
 
 class GenerateProject {
   constructor(projectName) {
@@ -14,9 +14,9 @@ class GenerateProject {
     this.workingDirectory = process.cwd();
     this.appDirectory = `${this.workingDirectory}/${this.projectName}`;
 
-    this.latestDownloadUrl = 'https://github.com/shakogegia/recompose-utils/archive/[version].zip';
+    this.latestDownloadUrl = 'https://github.com/vobi-io/boilerplate/archive/[version].zip';
 
-    this.repositoryName = 'recompose-utils';
+    this.repositoryName = 'boilerplate';
     this.releaseName = '';
 
     this.generate();
