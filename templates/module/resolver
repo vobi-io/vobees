@@ -1,0 +1,46 @@
+const [UModule]Model = require('app/modules/[LModule]/[LModule]Model')
+const { Resolver } = require('@vobi/api-composer')
+const moment = require('moment')
+
+class [UModule]Resolver extends Resolver {
+  constructor () {
+    super('[LModule]')
+  }
+
+  async update[UModule] ({ args: { _id, ...args } }) {
+    try {
+      const [LModule] = await [UModule]Model.findById(_id)
+
+      for (const arg in args) [LModule][arg] = args[arg]
+
+      return await [LModule].save()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+
+  async create[UModule] ({ args: { name } }) {
+    try {
+      const [LModule] = new [UModule]Model({ name })
+      await [LModule].save()
+      return [LModule]
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+
+  async delete[UModule] ({ args: { _id } }) {
+    try {
+      const data = { deletedAt: moment().toISOString() }
+      const res = await [UModule]Model.updateOne({ _id, deletedAt: null }, data)
+      if (!res.n) throw new Error('[UModule] not found')
+
+      const [LModule] = await [UModule]Model.findOne({ _id })
+      return [LModule]
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+}
+
+module.exports = [UModule]Resolver

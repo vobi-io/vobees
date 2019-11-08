@@ -1,8 +1,0 @@
-var Promise = require('bluebird')
-
-class [UModule]Repository {
-
-
-}
-
-module.exports = [UModule]Repository

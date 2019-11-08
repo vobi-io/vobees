@@ -1,27 +1,15 @@
-module.exports = function (mongoose) {
-  var Schema = mongoose.Schema
+const { mongoose } = require('app/dbConnect')
+const { defaultConfig } = require('app/modules/common/schemaMongoose')
 
-  var [LModule]Schema = new Schema({
-    
-    owner: { type: Schema.Types.ObjectId, ref: 'User' },
-    createdTime: { type: Date, default: Date.now },
-    modifiedTime: { type: Date },
-    version: { type: Number }, // version is increasing by update date
-  })
+const { Schema } = mongoose
 
-  [LModule]Schema.pre('save', function (next) {
-    this.version = +new Date()
-    this.modifiedTime = Date.now()
-    next()
-  })
+const [LModule]Schema = new Schema(
+  {
+    name: { type: String, description: 'სახელი' }
+  },
+  { ...defaultConfig }
+)
 
-  [LModule]Schema.methods.toJSON = function () {
-    var obj = this.toObject()
-    // remove props that should not be exposed
-    delete obj.__v
+const [UModule] = mongoose.model('[UModule]', [LModule]Schema)
 
-    return obj
-  }
-
-  return mongoose.model('[UModule]', [LModule]Schema)
-}
+module.exports = [UModule]

@@ -55,12 +55,22 @@ class GenerateModule {
     this.copyFile(template, destFileName);
   }
 
+  generateFileInFolder(template, filename, retainFileName, folder) {
+    const destFileName = retainFileName ? filename : `${folder}/${this.moduleName}${filename}`;
+    this.copyFile(template, destFileName);
+  }
+
   createModuleFiles() {
-    this.generateFile('controller', 'Controller.js');
+    this.generateFile('api', 'Api.js');
     this.generateFile('model', 'Model.js');
-    this.generateFile('repository', 'Repository.js');
-    this.generateFile('router', 'Route.v1.js');
-    this.generateFile('index', 'index.js', true);
+    this.generateFolder('resolvers');
+    this.generateFileInFolder('resolver', 'Resolver.js', false, 'resolvers');
+    this.generateFile('Type', 'Types.js');
+    this.generateFile('TC', 'TC.js');
+  }
+
+  generateFolder(folderName) {
+    fs.mkdirSync(`${this.newModuleDirectory}/${folderName}`);
   }
 
   generate() {

@@ -1,6 +1,6 @@
 {
   "name": "vobi-cli",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Vobi command line tool",
   "main": "./build/index.js",
   "scripts": {

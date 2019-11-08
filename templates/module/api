@@ -1,0 +1,29 @@
+const api = makeApi('[UModule]')
+
+require('app/modules/[LModule]/[LModule]Types')(api)
+require('app/modules/[LModule]/[LModule]TC')(api)
+
+api.policy(['auth.isAuth', 'auth.isVerified'])
+
+api.queryOf('[UModule].findMany', '[LModule]s')
+
+api
+  .mutation('create[UModule]', '[LModule].create[UModule]')
+  .args({
+    name: 'String!',
+  })
+  .after('notification.createNotification')
+  .afterAsync('activity.register')
+
+api
+  .mutation('update[UModule]', '[LModule].update[UModule]')
+  .args({
+    _id: 'MongoID!',
+    name: 'String!'
+  })
+  .afterAsync('activity.register')
+
+api
+  .mutation('delete[UModule]', '[LModule].delete[UModule]')
+  .args({ _id: 'MongoID!' })
+  .afterAsync('activity.register')

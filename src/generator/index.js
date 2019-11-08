@@ -2,10 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import colors from 'colors';
 import download from 'download';
-import axios from 'axios';
 import { copyDir, rmdir } from '../utils/helpers';
-
-const latestReleaseUrl = 'https://api.github.com/repos/vobi-io/boilerplate/releases/latest';
 
 class GenerateProject {
   constructor(projectName) {
@@ -14,7 +11,7 @@ class GenerateProject {
     this.workingDirectory = process.cwd();
     this.appDirectory = `${this.workingDirectory}/${this.projectName}`;
 
-    this.latestDownloadUrl = 'https://github.com/vobi-io/boilerplate/archive/[version].zip';
+    this.latestDownloadUrl = 'https://github.com/vobi-io/boilerplate-api/archive/master.zip';
 
     this.repositoryName = 'boilerplate';
     this.releaseName = '';
@@ -44,30 +41,19 @@ class GenerateProject {
   }
 
   async unzipFile() {
-    const src = `${this.appDirectory}/${this.repositoryName}-${this.releaseName}/`;
+    const src = `${this.appDirectory}/${this.repositoryName}-api-master/`;
     const dest = `${this.appDirectory}`;
     copyDir(src, dest);
   }
 
   async clear() {
-    const src = `${this.appDirectory}/${this.repositoryName}-${this.releaseName}`;
+    const src = `${this.appDirectory}/${this.repositoryName}-api-master/`;
     rmdir(src);
     const screenshots = `${this.appDirectory}/screenshots`;
     rmdir(screenshots);
   }
 
-  async getLatestVersion() {
-    const { data } = await axios.get(latestReleaseUrl);
-    this.latestDownloadUrl = this.latestDownloadUrl.split('[version]').join(data.name);
-
-    this.releaseName = data.name;
-
-    this.log(`Latest version is: ${this.releaseName}`);
-  }
-
   async createProjectFiles() {
-    this.log('Checking for latest version...');
-    await this.getLatestVersion();
     this.log('Downloading latest version...');
     await this.downloadBoilerplate();
     this.log('Extracting Project files...');
