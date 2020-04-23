@@ -11,9 +11,9 @@ class GenerateProject {
     this.workingDirectory = process.cwd();
     this.appDirectory = `${this.workingDirectory}/${this.projectName}`;
 
-    this.latestDownloadUrl = 'https://github.com/vobi-io/boilerplate-api/archive/master.zip';
+    this.latestDownloadUrl = 'https://github.com/vobi-io/vobees-boilerplate/archive/master.zip';
 
-    this.repositoryName = 'boilerplate';
+    this.repositoryName = 'vobees-boilerplate';
     this.releaseName = '';
 
     this.generate();

@@ -2,15 +2,15 @@
 Command line tool for Vobi Backend
 
 ### Install
-Install vobi-cli
+Install vobees
 ```
-npm install -g vobi-cli
+npm install -g vobees
 ```
 
-after installing `vobi-cli` you can create new project by running
+after installing `vobees` you can create new project by running
 
 ```
-vobi-cli new myApp
+vobees new myApp
 ```
 
 <img src="./screenshots/demo_generator.gif" style="margin:auto"/>
@@ -21,7 +21,7 @@ vobi-cli new myApp
 Run command from project`s root folder
 
 ```
-vobi-cli [method]
+vobees [method]
 ```
 
 ### Methods
@@ -32,5 +32,5 @@ vobi-cli [method]
 
 ####  Create new module
 ```
-vobi-cli generate:module [module name]
+vobees generate:module [module name]
 ```

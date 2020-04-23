@@ -1,7 +1,7 @@
 {
-  "name": "vobi-cli",
+  "name": "vobees",
   "version": "1.0.6",
-  "description": "Vobi command line tool",
+  "description": "Vobi Framework",
   "main": "./build/index.js",
   "scripts": {
     "transpile": "npx babel --presets @babel/preset-env ./src --out-dir ./build  --plugins @babel/plugin-transform-runtime --copy-files --ignore ./src/templates/modules ",
@@ -14,16 +14,16 @@
     "prepare": "npm run build"
   },
   "keywords": [
-    "vobi-cli"
+    "vobees"
   ],
   "author": "vobi.io",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://github.com/vobi-io/vobi-cli"
+    "url": "https://github.com/vobi-io/vobees"
   },
   "bin": {
-    "vobi-cli": "./build/index.js"
+    "vobees": "./build/index.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -35,7 +35,6 @@
     "http": "0.0.0",
     "https": "^1.0.0",
     "inquirer": "^6.2.0",
-    "mongoose": "^5.3.4",
     "mv": "^2.1.1",
     "p-iteration": "^1.1.7",
     "replace": "^1.0.0",
