@@ -11,7 +11,8 @@
     "test": "nyc mocha --require babel-core/register",
     "lcov": "http-server ./coverage/lcov-report/",
     "prepublishOnly": "npm run build",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "new:project": "node ./src/index.js new"
   },
   "keywords": [
     "vobees"

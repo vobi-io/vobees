@@ -1,13 +1,10 @@
 const { mongoose } = require('app/dbConnect')
-const { defaultConfig } = require('app/modules/common/schemaMongoose')
-
 const { Schema } = mongoose
 
 const [LModule]Schema = new Schema(
   {
-    name: { type: String, description: 'სახელი' }
-  },
-  { ...defaultConfig }
+    name: { type: String, description: 'Write description of name here' }
+  }
 )
 
 const [UModule] = mongoose.model('[UModule]', [LModule]Schema)

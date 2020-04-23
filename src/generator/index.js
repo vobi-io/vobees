@@ -41,13 +41,13 @@ class GenerateProject {
   }
 
   async unzipFile() {
-    const src = `${this.appDirectory}/${this.repositoryName}-api-master/`;
+    const src = `${this.appDirectory}/${this.repositoryName}-master/`;
     const dest = `${this.appDirectory}`;
     copyDir(src, dest);
   }
 
   async clear() {
-    const src = `${this.appDirectory}/${this.repositoryName}-api-master/`;
+    const src = `${this.appDirectory}/${this.repositoryName}-master/`;
     rmdir(src);
     const screenshots = `${this.appDirectory}/screenshots`;
     rmdir(screenshots);
@@ -68,7 +68,8 @@ class GenerateProject {
     this.log('To run project, cd into project directory and run:');
     this.log('');
     this.log(`cd ${this.projectName}`);
-    this.log('npm start');
+    this.log('yarn install');
+    this.log('yarn start');
   }
 
   log(msg) {

@@ -3,8 +3,6 @@
 /**
  * Module dependencies.
  */
-
-
 import program from 'commander';
 import colors from 'colors';
 import fs from 'fs';

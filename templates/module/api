@@ -3,27 +3,27 @@ const api = makeApi('[UModule]')
 require('app/modules/[LModule]/[LModule]Types')(api)
 require('app/modules/[LModule]/[LModule]TC')(api)
 
-api.policy(['auth.isAuth', 'auth.isVerified'])
+const [UModule]Resolver = require('app/modules/invoice/resolvers/invoiceResolver')
+const [LModule]Resolver = new [UModule]Resolver()
 
-api.queryOf('[UModule].findMany', '[LModule]s')
+
+api.queryOf('[UModule].findMany', get[LModule]s)
 
 api
-  .mutation('create[UModule]', '[LModule].create[UModule]')
+  .mutation('create[UModule]', [LModule]Resolver.create[UModule])
   .args({
     name: 'String!',
   })
-  .after('notification.createNotification')
-  .afterAsync('activity.register')
 
 api
-  .mutation('update[UModule]', '[LModule].update[UModule]')
+  .mutation('update[UModule]', [LModule]Resolver.update[UModule])
   .args({
     _id: 'MongoID!',
     name: 'String!'
   })
-  .afterAsync('activity.register')
+  .type('[UModule]')
 
 api
-  .mutation('delete[UModule]', '[LModule].delete[UModule]')
+  .mutation('delete[UModule]', [LModule]Resolver.delete[UModule])
   .args({ _id: 'MongoID!' })
-  .afterAsync('activity.register')
+  .type('[UModule]')
