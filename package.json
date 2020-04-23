@@ -1,7 +1,7 @@
 {
   "name": "vobees",
-  "version": "1.0.6",
-  "description": "Vobi Framework",
+  "version": "1.0.8",
+  "description": "Vobi cli",
   "main": "./build/index.js",
   "scripts": {
     "transpile": "npx babel --presets @babel/preset-env ./src --out-dir ./build  --plugins @babel/plugin-transform-runtime --copy-files --ignore ./src/templates/modules ",

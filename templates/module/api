@@ -3,27 +3,31 @@ const api = makeApi('[UModule]')
 require('app/modules/[LModule]/[LModule]Types')(api)
 require('app/modules/[LModule]/[LModule]TC')(api)
 
-const [UModule]Resolver = require('app/modules/invoice/resolvers/invoiceResolver')
+const [UModule]Resolver = require('./resolvers/[LModule]Resolver')
 const [LModule]Resolver = new [UModule]Resolver()
 
-
-api.queryOf('[UModule].findMany', get[LModule]s)
+api.queryOf('[UModule].findMany', 'get[UModule]')
+  .type('[[UModule]]')
 
 api
-  .mutation('create[UModule]', [LModule]Resolver.create[UModule])
+  .mutation('create[UModule]')
   .args({
-    name: 'String!',
+    name: 'String!'
   })
+  .resolve([LModule]Resolver.create[UModule])
+  .type('[UModule]')
 
 api
-  .mutation('update[UModule]', [LModule]Resolver.update[UModule])
+  .mutation('update[UModule]')
   .args({
     _id: 'MongoID!',
     name: 'String!'
   })
+  .resolve([LModule]Resolver.update[UModule])
   .type('[UModule]')
 
 api
-  .mutation('delete[UModule]', [LModule]Resolver.delete[UModule])
+  .mutation('delete[UModule]')
   .args({ _id: 'MongoID!' })
+  .resolve([LModule]Resolver.delete[UModule])
   .type('[UModule]')

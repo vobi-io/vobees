@@ -3,7 +3,8 @@ const { Schema } = mongoose
 
 const [LModule]Schema = new Schema(
   {
-    name: { type: String, description: 'Write description of name here' }
+    name: { type: String, description: 'Write description of name here' },
+    deletedAt: { type: Date, default: null, description: 'Write description of DeleteAt' }
   }
 )
 

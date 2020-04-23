@@ -22,7 +22,7 @@ program
 
 
 program
-  .command('generate:module')
+  .command('module')
   .alias('a')
   .description('Generate New Module')
   .action(() => {

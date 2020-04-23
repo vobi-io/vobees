@@ -1,6 +1,5 @@
 const [UModule]Model = require('app/modules/[LModule]/[LModule]Model')
 const { Resolver } = require('@vobi/api-composer')
-const moment = require('moment')
 
 class [UModule]Resolver extends Resolver {
   constructor () {
@@ -31,7 +30,7 @@ class [UModule]Resolver extends Resolver {
 
   async delete[UModule] ({ args: { _id } }) {
     try {
-      const data = { deletedAt: moment().toISOString() }
+      const data = { deletedAt: new Date() }
       const res = await [UModule]Model.updateOne({ _id, deletedAt: null }, data)
       if (!res.n) throw new Error('[UModule] not found')
 

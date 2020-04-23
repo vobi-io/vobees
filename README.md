@@ -28,9 +28,9 @@ vobees [method]
 
 | name | Options | description |
 |------|---------|-------------|
-| `generate:module` | - | Generate new module scaffolding for project|
+| `module` | - | Generate new module scaffolding for project|
 
 ####  Create new module
 ```
-vobees generate:module [module name]
+vobees module [module name]
 ```
